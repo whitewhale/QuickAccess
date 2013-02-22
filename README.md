@@ -1,42 +1,52 @@
 QuickAccess
 ===========
 
-Version 1.3.4 (2010-10-31)
+Version 1.5.0 (2013-02-22)
 
 ###Requirements###
 
-Any recent jQuery will do. (Load JQuery before QuickAccess.)
+QuickAccess is a jQuery plugin and requires the jQuery.comb plugin (1.0.0+) by Fred LeBlanc (White Whale alumnus 2012). jQuery.comb is included for convenience in the vendor folder.
 
 ###Usage###
 
-$('.inputselector').quickaccess(settingsObject);
+$('.selector').quickAccess(options);
 
-.inputselector selects the container for the search input (so when the element has no other function than quickaccess it isn't shown) OR the search input itself.
+The selector is the container for the search `<input>` (so when the element has no other function than QuickAccess it isn't shown) OR the search `<input>` itself.
 
-settingsObject may contain:
+QuickAccess options is a configuration object that may contain:
 
-* links : the selector for the links that are to be searched (i.e. '#linkslist a' or 'a.quickaccess'). To organize results into categories, selector may be an array of objects (i.e. [{selector:'#mammals a',title:'Mammals',className:'mammals'},{selector:'#reptiles a',title:'Reptiles',className:'reptiles'}])
+* _links_ : The selector for the links that are to be searched (i.e. `'#linkslist a'` or `'a.quickaccess'`). To organize results into categories, selector may be an array of objects (i.e. `[{selector:'#mammals a',title:'Mammals',className:'mammals'},{selector:'#reptiles a',title:'Reptiles',className:'reptiles'}]`). The default is `.qa_links a`.
   
-* results : the container in which the results will be placed (default: they'll be placed in a .qa_results created immediately after the search box)
+* _results_ : The container in which the results will be placed. The default is to place them in a `div.qa_results` element created immediately after the search `<input>`.
 
-*	forceSelect : when true, an autocomplete option will always be selected; disable, for instance, if you'd like the quickaccess box to also function as a typical search box (default:true)
+*	_forceSelect_ : When true, an autocomplete option will always be selected; disable this, for instance, if you'd like the quickaccess box to also function as a typical search box. The default is `true`.
 
-*	onSubmit(event,selected) : callback function for when the user hits the enter/return key; by default, this will take them to the selected link (args: the keypress event and the currently selected result)
+*	_onSubmit(event,selected)_ : This is the callback function for when the user hits the enter/return key; by default, this will take them to the selected link. The arguments are the keypress event and the currently selected result.
 
-*  placeholder : set the HTML5 placeholder attribute on the input (default: none)
+* _maxResults_ : This is the maximum number of results to show at any one time. The default is `10`.
 
-*  maxResults : the maximum number of results to show at any one time (default: 10)
+* _placeholder_ : This sets the HTML5 placeholder attribute on the `<input>`. The default is `null` or no placeholder.
 
-*  tooMany : the message to show when there are more matching results than maxResults (default: 'Keep typing...')
+* _tooMany_ : This is the message shown when there are more matching results than maxResults. The default is `'Keep typing...'`.
 
-*  noneFound : the message to show when no results are found (default: 'No matches found.')
+* _noneFound_ : This is the message shown when no results are found. The default is `'No matches found.'`.
 
-*  focus : true/false; should the search element grab focus upon page initialization? (default: false)
+* _focus_ : Should the search element assume focus upon page initialization? The default is `false`.
 
-*  sort : true/false; should the search results be alphabetized? (default: false)
+* _removeDuplicates_ : Should duplicate URLs be allowed in the results? The default is `false`. 
 
-*  removeDuplicates : true/false; should duplicate URLs be allowed in the results? (default: false) 
+* _mouseControls_ : Should mouse scroll events move you up/down the results? The default is `true`. 
+
+* _showScore_ : Should the relevance score be appended to the individual results? When true, the score is appended to the result wrapped by `<small>`. The default is `false`.
+
+* _combOptions_ : Should you want to tweak the response/weighting of results provided by jQuery.comb, you may alter its settings through an options object that will be passed to it. The default is to use jQuery.comb's default settings or `{}`. Refer to jQuery.comb for its configuration options.
 
 ###Example###
 
-$('#quicksearch').quickaccess({links:'#offices li a', maxResults:10,noneFound:'Sorry, no matching links were found.'});
+```
+$('#quicksearch').quickAccess({
+  links: '#offices li a',
+  maxResults: 10,
+  noneFound: 'Sorry, no matching links were found.'
+});
+```
