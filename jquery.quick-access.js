@@ -89,14 +89,21 @@
 								$(data)
 									.find(category.selector)
 									.each(function() {
-										var record = {};
-
-										match = $(this).html().match(/<!--([\s\w\d,]+)-->/i);
-										
-										record.keywords = (match && match[1]) ? $.trim(match[1].replace(/,/ig, ' ')) : "";
-										record.link = $(this).attr('href');
-										record.title = $(this).text();
-										output["category" + i].push(record);
+                    var record = {}, $a = $(this), commentKeywords, dataKeywords, keywords = '';
+                    
+                    commentKeywords = $a.html().match(/<!--([\s\w\d,]+)-->/i);
+                    if (commentKeywords && commentKeywords[1]) {
+                      keywords += commentKeywords[1].replace(/,/ig, ' ') + ' ';
+                    }
+                    dataKeywords = $a.attr('data-keywords');
+                    if (typeof dataKeywords !== 'undefined') {
+                      keywords += $.trim(dataKeywords.replace(/,/ig, ' '));
+                    }
+    
+                    record.keywords = $.trim(keywords);
+                    record.link = $a.attr('href');
+                    record.title = $a.text();
+                    output["category" + i].push(record);
 									});
 								});
 
@@ -147,6 +154,7 @@
 									categoryRef = a.replace("category", "");
 
 									// if a title was given for this category, add it
+                  if (a === 'category0') { a = 'Results'; } // hard-coded hack to skip category0
 									if (a) {
 										settings.resultTarget.find(".qa_category_" + a_class).prepend('<div class="qa_category_title">' + a + '</div>');
 									}

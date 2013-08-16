@@ -242,6 +242,7 @@
 
 			// use locally-supplied data
 			} else {
+			  settings.haystack = settings.formatRemoteData($('body').html());
 				methods.prepareData.apply(self, [settings.haystack]);
 			}
 		},
