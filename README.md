@@ -1,7 +1,7 @@
 QuickAccess
 ===========
 
-Version 1.5.0 (2013-02-22)
+Version 1.5.1 (2013-08-16)
 
 ###Requirements###
 
@@ -41,12 +41,31 @@ QuickAccess options is a configuration object that may contain:
 
 * _combOptions_ : Should you want to tweak the response/weighting of results provided by jQuery.comb, you may alter its settings through an options object that will be passed to it. The default is to use jQuery.comb's default settings or `{}`. Refer to jQuery.comb for its configuration options.
 
-###Example###
+###Examples###
+
+__Local Data Source (in page as HTML)__
 
 ```
 $('#quicksearch').quickAccess({
   links: '#offices li a',
-  maxResults: 10,
-  noneFound: 'Sorry, no matching links were found.'
+  results: '.js-qa-results'
+});
+```
+
+__Remote Data Source (as HTML)__
+
+Below, `/includes/quickaccess.html` is an HTML snippet than would minimally be a list of links. When the user clicks into the search input for the first time, the source file is requested and cached by the script for all further same-page requests. (After that any allowed browser cache would take over, per web server cache settings.)
+
+
+```
+$('#quicksearch').quickAccess({
+  links:'.quickaccess .category a',
+  results:'.js-qa-results',
+	combOptions: {
+    remoteDataType: "html",
+    loadFrom: function () {
+      return "/includes/quickaccess.html";
+    }
+  }
 });
 ```
