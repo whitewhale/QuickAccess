@@ -41,7 +41,7 @@
 		customAlternates: null,
 		includeFullQuery: true,
 		preformat: function(keyword) {
-			return keyword.replace(/[^\w\d\-\+\s&Õ'Ô]/ig, "");
+			return keyword.replace(/[^\w\d\-\+\s&ï¿½'ï¿½]/ig, "");
 		},
 
 		// output
@@ -111,6 +111,23 @@
 					}
 
 					try {
+						
+						var query,
+						key_pressed = String.fromCharCode(e.which);
+						if (!key_pressed.match(/[a-zA-Z0-9 ]+/)) {
+							key_pressed = '';
+						};
+						
+						// preformat
+						query = settings.preformat.apply(self, [$.trim($(this).val()+key_pressed)]);
+						$(this).data('query', query); // store current query on input element
+						
+						// short-circuit if forcing reload on every keystroke
+						// and minimum characters isn't reached
+						if (settings.forceReloadOnEachKeypress && query.length < settings.minCharacters) {
+							throw("");
+						}
+						
 						methods.loadData.apply(self, [settings.forceReloadOnEachKeypress]);
 					} catch (error) {
 						if (settings.debug) {
@@ -858,15 +875,15 @@
 			}
 
 			// check for regex match alternates
-			if (word.indexOf("Õ") !== -1) {
-				matches.push(word.replace(/Õ/g, "'"));
-				matches.push(word.replace(/Õ/g, "Ô"));
+			if (word.indexOf("ï¿½") !== -1) {
+				matches.push(word.replace(/ï¿½/g, "'"));
+				matches.push(word.replace(/ï¿½/g, "ï¿½"));
 			} else if (word.indexOf("'") !== -1) {
-				matches.push(word.replace(/'/g, "Õ"));
-				matches.push(word.replace(/'/g, "Ô"));
-			} else if (word.indexOf("Ô") !== -1) {
-				matches.push(word.replace(/Ô/g, "'"));
-				matches.push(word.replace(/Ô/g, "Õ"));
+				matches.push(word.replace(/'/g, "ï¿½"));
+				matches.push(word.replace(/'/g, "ï¿½"));
+			} else if (word.indexOf("ï¿½") !== -1) {
+				matches.push(word.replace(/ï¿½/g, "'"));
+				matches.push(word.replace(/ï¿½/g, "ï¿½"));
 			}
 
 			if (matches.length) {
