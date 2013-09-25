@@ -41,7 +41,7 @@
 		customAlternates: null,
 		includeFullQuery: true,
 		preformat: function(keyword) {
-			return keyword.replace(/[^\w\d\-\+\s&�'�]/ig, "");
+			return keyword.replace(/[^\w\d\-\+\s&Õ'Ô]/ig, "");
 		},
 
 		// output
@@ -875,15 +875,15 @@
 			}
 
 			// check for regex match alternates
-			if (word.indexOf("�") !== -1) {
-				matches.push(word.replace(/�/g, "'"));
-				matches.push(word.replace(/�/g, "�"));
+			if (word.indexOf("Õ") !== -1) {
+				matches.push(word.replace(/Õ/g, "'"));
+				matches.push(word.replace(/Õ/g, "Ô"));
 			} else if (word.indexOf("'") !== -1) {
-				matches.push(word.replace(/'/g, "�"));
-				matches.push(word.replace(/'/g, "�"));
-			} else if (word.indexOf("�") !== -1) {
-				matches.push(word.replace(/�/g, "'"));
-				matches.push(word.replace(/�/g, "�"));
+				matches.push(word.replace(/'/g, "Õ"));
+				matches.push(word.replace(/'/g, "Ô"));
+			} else if (word.indexOf("Ô") !== -1) {
+				matches.push(word.replace(/Ô/g, "'"));
+				matches.push(word.replace(/Ô/g, "Õ"));
 			}
 
 			if (matches.length) {
